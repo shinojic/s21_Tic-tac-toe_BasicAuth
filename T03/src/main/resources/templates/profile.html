@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Крестики-нолики</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение элементов */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Высота вьюпорта */
+            background-color: #f0f0f0; /* Светлый фон */
+            font-family: Arial, sans-serif; /* Основной шрифт */
+        }
+
+        h1 {
+            text-align: center;
+            color: #c0392b; /* Красный цвет заголовка */
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Шрифт Comic Sans MS */
+            margin-bottom: 30px; /* Отступ снизу для отделения от содержимого */
+        }
+
+        .profile-info {
+            background-color: #ffffff; /* Белый фон блока с информацией */
+            border: 1px solid #c0392b; /* Красная граница */
+            border-radius: 10px; /* Закругленные углы */
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .profile-item {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .value {
+            font-size: 18px;
+            margin-top: 8px;
+        }
+
+        button {
+            background-color: #4caf50; /* Ярко-зеленый цвет кнопки */
+            color: white; /* Белый цвет текста на кнопках */
+            border: none; /* Убираем границу у кнопок */
+            border-radius: 10px; /* Закругленные углы у кнопок */
+            padding: 15px 30px; /* Внутренние отступы для кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопку */
+            width: 250px; /* Фиксированная ширина кнопок (можно изменить) */
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Шрифт Comic Sans MS для кнопок */
+            font-size: 18px; /* Размер шрифта для кнопок */
+            margin-top: 30px;
+        }
+
+        button:hover {
+            background-color: #388e3c; /* Темно-зеленый при наведении */
+            transform: scale(1.1); /* Увеличение кнопки при наведении */
+        }
+
+        .decor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Чтобы не мешать кликам по кнопкам */
+        }
+
+        .cross {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            color: red;
+            font-size: 60px;
+        }
+    </style>
+</head>
+<body>
+<h1>Профиль пользователя</h1>
+
+<div class="profile-info">
+    <div class="profile-item">
+        <div class="label">ID пользователя:</div>
+        <div class="value" th:text="${profile_id}">-</div>
+    </div>
+    <div class="profile-item">
+        <div class="label">Логин:</div>
+        <div class="value" th:text="${profile_login}">-</div>
+    </div>
+</div>
+
+<!-- Кнопки навигации -->
+<form action="/tic-tac-toe/home" method="get">
+    <button type="submit">На главную</button>
+</form>
+
+<div class="decor">
+    <!-- Примитивные крестики для декора -->
+    <div class="cross" style="top: 20%; left: 10%;">✖️</div>
+    <div class="cross" style="top: 60%; right: 15%;">✖️</div>
+    <div class="cross" style="bottom: 10%; left: 40%;">✖️</div>
+</div>
+
+</body>
+</html>

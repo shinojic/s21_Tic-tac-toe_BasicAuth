@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Авторизация</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение элементов */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Высота вьюпорта */
+            background-color: #f0f0f0; /* Светлый фон */
+            font-family: Arial, sans-serif; /* Основной шрифт */
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #c0392b; /* Красный цвет заголовка */
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Шрифт похожий на вторую страницу */
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .login-container {
+            background-color: #fff; /* Белый фон для формы */
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+            color: #c0392b;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #c0392b;
+            font-size: 14px;
+        }
+
+        button[type="button"], button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color:#4caf50; /* Зеленая кнопка */
+            color:#fff;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+            transition:.3s all ease;
+        }
+
+        button[type="button"]:hover, button[type="submit"]:hover {
+            background-color:#388e3c; /* Темнее при наведении */
+        }
+
+        /* Сообщения (ошибки/успехи) в стиле как на второй странице */
+        .message {
+            position:absolute; /* Можно оставить фиксированным или абсолютным внутри контейнера */
+            bottom:-60px; /* чуть ниже формы для видимости */
+            left:auto; right:auto;
+            max-width:350px;
+
+             /* Центрирование по горизонтали */
+             margin-left:auto; margin-right:auto;
+
+             padding:10px 20px;
+             border-radius:8px;
+             text-align:center;
+
+             opacity:.9;
+
+             font-family:'Comic Sans MS', cursive, sans-serif;
+
+             transition:.3s all ease;
+
+             font-size:.9em;
+
+         }
+         .error-message {
+             background-color:#f8d7da;
+             color:#721c24;
+             border:none;
+         }
+         .success-message {
+             background-color:#d4edda;
+             color:#155724;
+             border:none;
+         }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>Авторизация</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required />
+        </div>
+        <button type="button" onclick="sendLoginRequest()">Войти</button>
+    </form>
+    <!-- Кнопка регистрации -->
+    <form action="/tic-tac-toe/registration" method="get" style="margin-top:15px;">
+        <button type="submit">Регистрация</button>
+    </form>
+    <!-- Сообщение -->
+    <div id="message" class="message"></div>
+</div>
+
+<!-- Декоративные крестики для стиля -->
+<div class="decor">
+    <!-- Примитивные крестики для декора -->
+    <div class="cross" style="position:absolute; top:20%; left:10%; font-size:60px;">✖️</div>
+    <div class="cross" style="position:absolute; top:60%; right:15%; font-size:60px;">✖️</div>
+</div>
+
+<script>
+    function sendLoginRequest() {
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const messageDiv = document.getElementById('message');
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!username || !password) {
+            messageDiv.textContent = 'Введите пароль и логин';
+            messageDiv.className = 'message error-message';
+            messageDiv.style.display='block';
+            setTimeout(() => { messageDiv.style.display='none'; },3000);
+            return;
+        }
+
+        const credentials = username + ":" + password;
+        const base64Credentials = btoa(credentials);
+        const authorizationHeader = "Basic " + base64Credentials;
+
+        fetch('log', {
+            method:'POST',
+            headers:{
+               'Authorization': authorizationHeader
+           }
+       }).then(response => {
+           if (!response.ok) {
+               return response.json().then(errorData => {
+                   messageDiv.textContent = errorData.message || 'Ошибка авторизации';
+                   messageDiv.className='message error-message';
+                   messageDiv.style.display='block';
+                   setTimeout(()=>{ messageDiv.style.display='none'; },3000);
+               });
+           } else {
+               window.location.href='/tic-tac-toe/home';
+           }
+       }).catch(() => {
+           messageDiv.textContent='Ошибка сети';
+           messageDiv.className='message error-message';
+           messageDiv.style.display='block';
+           setTimeout(()=>{ messageDiv.style.display='none'; },3000);
+       });
+    }
+</script>
+
+</body>
+</html>

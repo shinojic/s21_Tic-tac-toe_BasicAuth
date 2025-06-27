@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Крестики-нолики</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение элементов */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Высота вьюпорта */
+            background-color: #f0f0f0; /* Светлый фон */
+            font-family: Arial, sans-serif; /* Основной шрифт */
+        }
+
+        h1 {
+            text-align: center;
+            color: #c0392b; /* Красный цвет заголовка */
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Шрифт Comic Sans MS */
+            margin-bottom: 20px; /* Отступ снизу для отделения от списка */
+        }
+
+        ul {
+            list-style-type: none; /* Убираем маркеры списка */
+            padding: 0; /* Убираем отступы */
+        }
+
+        li {
+            background-color: #ffffff; /* Белый фон для элементов списка */
+            border: 1px solid #c0392b; /* Красная граница элементов списка */
+            border-radius: 5px; /* Закругленные углы */
+            margin: 10px 0; /* Отступы между элементами списка */
+            padding: 10px; /* Внутренние отступы для элементов списка */
+            width: 300px; /* Ширина элементов списка */
+            text-align: center; /* Центрирование текста в элементах списка */
+        }
+
+        button {
+            background-color: #4caf50; /* Ярко-зеленый цвет кнопки */
+            color: white; /* Белый цвет текста на кнопках */
+            border: none; /* Убираем границу у кнопок */
+            border-radius: 10px; /* Закругленные углы у кнопок */
+            padding: 15px 30px; /* Внутренние отступы для кнопок */
+            cursor: pointer; /* Курсор при наведении на кнопку */
+            width: 250px; /* Фиксированная ширина кнопок (можно изменить) */
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Шрифт Comic Sans MS для кнопок */
+            font-size: 18px; /* Увеличенный размер шрифта для кнопок (можно изменить) */
+            margin-bottom: 15px; /* Отступ между кнопками */
+        }
+
+        button:hover {
+            background-color: #388e3c; /* Темно-зеленый при наведении */
+            transform: scale(1.1); /* Увеличение кнопки при наведении */
+        }
+
+        .decor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Чтобы не мешать кликам по кнопке */
+        }
+
+        .cross {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            color: red;
+            font-size: 60px;
+        }
+    </style>
+</head>
+<body>
+<h1>Крестики-нолики by @shinojic</h1>
+
+<form action="/tic-tac-toe/start" method="post">
+    <button type="submit">Начать новую игру</button>
+</form>
+<form action="/tic-tac-toe/start-computer" method="post">
+    <button type="submit">Начать новую игру c компьютером</button>
+</form>
+<form action="/tic-tac-toe/waiting-sessions" method="get">
+    <button type="submit">Присоединиться к игре</button>
+</form>
+<form action="/tic-tac-toe/sessions" method="get">
+    <button type="submit">Список игр</button>
+</form>
+<form action="/tic-tac-toe/profile" method="get">
+    <button type="submit">Профиль</button>
+</form>
+
+<div class="decor">
+    <!-- Примитивные крестики для декора -->
+    <div class="cross" style="top: 20%; left: 10%;">✖️</div>
+    <div class="cross" style="top: 60%; right: 15%;">✖️</div>
+    <div class="cross" style="bottom: 10%; left: 40%;">✖️</div>
+</div>
+
+</body>
+</html>
